@@ -370,6 +370,7 @@ fn main() {
     let accs: Vec<Acc> = transpose(routed)
         .into_par_iter()
         .zip(transpose(clicks))
+        .with_min_len((NS / (threads * 2)).max(1))
         .fold(
             || Acc::new(&ctx),
             |mut acc, (ev_col, cl_col)| {
